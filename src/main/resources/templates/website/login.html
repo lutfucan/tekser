@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+</head>
+
+<body>
+<nav th:replace="fragments/header :: nav">
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="card col-6 mx-auto" style="width: 20rem; margin-top: 120px;">
+            <div class="card-body">
+                <h4 class="card-title">Giriş:</h4>
+                <p th:if="${loginError}"  class="alert alert-danger" role="alert">Mail adresi veya şifre hatalı</p>
+                <form th:action="@{/perform-login}" method="post">
+                    <div class="form-group">
+                        <label th:for="email">Email</label>
+                        <input type="text" class="form-control" th:id="email" name="email" th:name="email" aria-describedby="emailHelp" placeholder="Mail adresi">
+                    </div>
+                    <div class="form-group">
+                        <label th:for="password">Şifre</label>
+                        <input type="password" class="form-control" name="password" th:name="password" th:id="password" placeholder="Şifre">
+                    </div>
+                    <!--<label> Remember Me</label>-->
+                    <!--<input type="checkbox" name="remember-me" />-->
+                    <button type="submit" class="btn btn-primary">Giriş</button>
+                </form>
+                <span>Henüz kayıtlı değilseniz, <a href="/register">kayıt olun!</a> </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+
+
+<div th:replace="fragments/jsScripts :: scripts"></div>
+
+
+</body>
+</html>

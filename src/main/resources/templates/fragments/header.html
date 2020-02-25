@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/head :: head">
+</head>
+<body>
+    <nav th:fragment="nav" id="navbar-home" class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" th:href="@{/index}" href="index">Ana Sayfa</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/index}" href="/index">Ana Sayfa<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="#">Hakkımızda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Hizmetler</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">İletişim</a>
+                </li>
+            </ul>
+
+
+            <ul class="navbar-nav ml-auto" id="users-nav-item" sec:authorize="${isAuthenticated()}">
+
+                <!--region For ROLE_USER display shoppingg cart icon-->
+                <!--======================================================================================-->
+                <li class="nav-item d-flex">
+                    <span class="shopping-cart align-self-center mx-2 " sec:authorize="hasRole('ROLE_USER')">
+                        <a style="background-color: transparent!important;"
+                           data-toggle="collapse"
+                           href="#shopping-cart-collapse" aria-expanded="false"
+                           aria-controls="shopping-cart-collapse">
+                            <i class="fa fa-shopping-cart " id="shopping-cart-icon" aria-hidden="true"
+                               style="background-color: transparent!important"></i>
+                        </a>
+                        <div class="collapse" id="shopping-cart-collapse" style="position: absolute;">
+                            <div class="card card-body">
+                                <p>Tüm konular:</p>
+                                <a type="button" class="btn btn-primary" style="font-size: 90%" th:href="@{#}">
+                                    Takip edilenler</a>
+                            </div>
+                        </div>
+                    </span>
+                </li>
+                <!--======================================================================================-->
+                <!--endregion-->
+
+
+                <!--region Displaying hello + username-->
+                <!--==============================================================================-->
+                <li class="nav-item">
+                    <span class="navbar-text">Merhaba <span sec:authentication="name"></span></span>
+                </li>
+                <!--=============================================================================-->
+                <!--endregion-->
+
+
+                <!--region For ROLE_ADMIN display admin page-->
+                <!--================================================================================================-->
+                <li class="nav-item d-flex">
+                    <i class="align-self-center fas fa-user-cog" style="color: white;"></i>
+                    <a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/adminPage}" href="/adminPage">
+                        Admin
+                    </a>
+                </li>
+                <!--================================================================================================-->
+                <!--endregion-->
+
+
+                <!--region Logout button-->
+                <!--==================================================================================-->
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript: document.logoutForm.submit()" role="menuitem">
+                        Çıkış
+                    </a>
+                    <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+                        <input hidden type="submit" value="Çıkış yap"/>
+                    </form>
+                </li>
+                <!--==================================================================================-->
+                <!--endregion-->
+            </ul>
+
+            <!--region Login and Register menu items-->
+            <!--==========================================================================================-->
+            <ul class="navbar-nav ml-auto" sec:authorize="${!isAuthenticated()}">
+                <li class="nav-item d-flex flex-row">
+                    <i class="align-self-center fa fa-user-o " aria-hidden="true" style="color: white;"></i>
+                    <a class="nav-link mr-3" th:href="@{/login}" href="/login">Giriş</a>
+                </li>
+                <li class="nav-item d-flex flex-row">
+                    <i class="align-self-center fa fa-sign-in " aria-hidden="true" style="color: white;"></i>
+                    <a class="nav-link" th:href="@{/register}" href="/register">Kayıt</a>
+                </li>
+            </ul>
+            <!--==========================================================================================-->
+            <!--endregion-->
+        </div>
+    </nav>
+
+    <div th:replace="fragments/jsScripts :: scripts"></div>
+</body>
+</html>

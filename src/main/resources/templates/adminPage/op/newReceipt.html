@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+</head>
+<body>
+
+<nav th:replace="fragments/header :: nav"></nav>
+
+<div id="admin-section">
+    <div class="admin-inner">
+        <div class="container">
+            <div class="d-flex flex-row">
+                <div th:replace="fragments/adminSidebar :: admin-sidebar"></div>
+
+                <div id="admin-content">
+                    <form class="admin-form" th:action="@{/adminPage/receipts/newReceipt}" th:object="${newReceipt}"
+                          th:method="post" method="post">
+                        <ul class="global-errors" th:if="${#fields.hasErrors('global')}">
+                            <li class="text-danger" th:each="err : ${#fields.errors('global')}"
+                                th:text="${err}">Girilen değer geçersiz
+                            </li>
+                        </ul>
+                        <div class="form-group row">
+                            <label for="client" class="col-sm-2">Müşteri</label>
+                            <select class="js-example-basic-single form-control col-sm-10" th:field="*{client}" id="client">
+                                <option text="----" value="0">----</option>
+                                <option th:each="singleClient : ${clientList}"
+                                        th:value="${singleClient.id}"
+                                        th:text="${singleClient.name}">
+                                </option>
+                            </select>
+                            <p class="text-danger" th:if="${#fields.hasErrors('client')}" th:errors="*{client}"></p>
+                        </div>
+                        <div class="form-group row">
+                            <label for="product" class="col-sm-2">Ürün</label>
+                            <select class="form-control col-sm-4" th:field="*{product}" id="product">
+                                <option text="----" value="0">----</option>
+                                <option th:each="singleProduct : ${productList}"
+                                        th:value="${singleProduct.id}"
+                                        th:text="${singleProduct.name}">
+                                </option>
+                            </select>
+                            <p class="text-danger" th:if="${#fields.hasErrors('product')}" th:errors="*{product}"></p>
+
+                            <label for="brand" class="col-sm-2">Marka</label>
+                            <select class="form-control col-sm-4" th:field="*{brand}" id="brand">
+                                <option text="----" value="0">----</option>
+                                <option th:each="singleBrand : ${brandList}"
+                                        th:value="${singleBrand.id}"
+                                        th:text="${singleBrand.name}">
+                                </option>
+                            </select>
+                            <p class="text-danger" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></p>
+                        </div>
+                        <div class="form-group row">
+                            <label for="productModel" class="col-sm-2">Model</label>
+                            <select class="form-control col-sm-4" th:field="*{productModel}" id="productModel">
+                                <option text="----" value="0">----</option>
+                                <option th:each="singleModel : ${productModelList}"
+                                        th:value="${singleModel.id}"
+                                        th:text="${singleModel.name}">
+                                </option>
+                            </select>
+                            <p class="text-danger" th:if="${#fields.hasErrors('productModel')}"
+                               th:errors="*{productModel}"></p>
+
+                            <label for="accessory" class="col-sm-2">Aksesuar</label>
+                            <select multiple="multiple" class="form-control col-sm-4" th:field="*{accessory}"
+                                    id="accessory">
+                                <option th:each="singleAccessory : ${accessoryList}"
+                                        th:value="${singleAccessory.id}"
+                                        th:text="${singleAccessory.name}">
+                                </option>
+                            </select>
+                            <p class="text-danger" th:if="${#fields.hasErrors('accessory')}"
+                               th:errors="*{accessory}"></p>
+                        </div>
+                        <div class="form-group row">
+                            <label for="delivery" class="col-sm-2">Teslimat</label>
+                            <select class="form-control col-sm-4" th:field="*{delivery}" id="delivery">
+                                <option text="----" value="0">----</option>
+                                <option th:each="singleDelivery : ${deliveryList}"
+                                        th:value="${singleDelivery.id}"
+                                        th:text="${singleDelivery.name}">
+                                </option>
+                            </select>
+                            <p class="text-danger" th:if="${#fields.hasErrors('delivery')}" th:errors="*{delivery}"></p>
+
+                            <label for="branche" class="col-sm-2">Şube</label>
+                            <select class="form-control col-sm-4" th:field="*{branche}" id="branche">
+                                <option text="----" value="0">----</option>
+                                <option th:each="singleBranche : ${brancheList}"
+                                        th:value="${singleBranche.id}"
+                                        th:text="${singleBranche.name}">
+                                </option>
+                            </select>
+                            <p class="text-danger" th:if="${#fields.hasErrors('branche')}" th:errors="*{branche}"></p>
+
+                        </div>
+                        <div class="form-group row">
+                            <label for="underWarranty" class="col-sm-2">Garantisi Var Mı?</label>
+                            <input class="custom-checkbox col-sm-4" type="checkbox" th:field="*{underWarranty}"
+                                   th:checked="${underWarranty}" id="underWarranty"/>
+                            <p class="text-danger" th:if="${#fields.hasErrors('underWarranty')}"
+                               th:errors="*{underWarranty}"></p>
+
+                            <label for="hasBackup" class="col-sm-2">Yedek Alınacak Mı?</label>
+                            <input class="custom-checkbox col-sm-4" type="checkbox" th:field="*{hasBackup}"
+                                   th:checked="${hasBackup}" id="hasBackup"/>
+                            <p class="text-danger" th:if="${#fields.hasErrors('hasBackup')}"
+                               th:errors="*{hasBackup}"></p>
+
+                        </div>
+                        <div class="form-group row">
+                            <label for="dateOfReceipt" class="col-sm-2">İşlem Tarihi</label>
+                            <input class="form-control col-sm-4" type="datetime-local" th:field="*{dateOfReceipt}"
+                                   id="dateOfReceipt"/>
+                            <p class="text-danger" th:if="${#fields.hasErrors('dateOfReceipt')}"
+                               th:errors="*{dateOfReceipt}"></p>
+
+                            <label for="dateOfStartToRepair" class="col-sm-2">Onarıma Başlama</label>
+                            <input class="form-control col-sm-4" type="datetime-local" th:field="*{dateOfStartToRepair}"
+                                   id="dateOfStartToRepair"/>
+                            <p class="text-danger" th:if="${#fields.hasErrors('dateOfStartToRepair')}"
+                               th:errors="*{dateOfStartToRepair}"></p>
+
+                        </div>
+                        <div class="form-group row">
+                            <label for="dateOfEndingRepair" class="col-sm-2">Onarım Sonu</label>
+                            <input class="form-control col-sm-4" type="datetime-local" th:field="*{dateOfEndingRepair}"
+                                   id="dateOfEndingRepair"/>
+                            <p class="text-danger" th:if="${#fields.hasErrors('dateOfEndingRepair')}"
+                               th:errors="*{dateOfEndingRepair}"></p>
+
+                            <label for="dateOfDeliverToClient" class="col-sm-2">Teslimat Tarihi</label>
+                            <input class="form-control col-sm-4" type="datetime-local"
+                                   th:field="*{dateOfDeliverToClient}" id="dateOfDeliverToClient"/>
+                            <p class="text-danger" th:if="${#fields.hasErrors('dateOfDeliverToClient')}"
+                               th:errors="*{dateOfDeliverToClient}"></p>
+
+                        </div>
+                        <a class="btn btn-dark" th:href="@{/adminPage/receipts}">İptal</a>
+                        <button type="submit" class="btn btn-primary">Gönder</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+<div th:replace="fragments/jsScripts :: scripts"></div>
+
+</body>
+</html>

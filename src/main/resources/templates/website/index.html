@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+</head>
+<script src="/js/c0c323679c.js"></script>
+
+
+<body>
+
+<nav th:replace="fragments/header :: nav"></nav>
+
+<!-- HOME SECTION -->
+<header id="home-section">
+    <div class="dark-overlay">
+        <div class="home-inner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 d-none d-lg-block">
+                        <div class="jumbotron" style="opacity: 0.9;" sec:authorize="${!isAuthenticated()}">
+                            <h1 class="display-3">Merhaba!</h1>
+                            <p class="lead">Teknik Servis Uygulamasına Hoşgeldiniz. İşlem yapabilmek için giriş
+                                yapmalısınız.</p>
+                            <hr class="my-2">
+                            <p>Üyeliğiniz mevcutsa giriş yapmak için tıklayın.</p>
+                            <p class="lead">
+                                <a class="btn btn-primary btn-lg" th:href="@{/login}" href="/login" role="button">Giriş
+                                    Yap</a>
+                                <a class="btn btn-primary btn-lg" th:href="@{/register}" href="/register" role="button">Kayıt
+                                    Ol</a>
+                            </p>
+                        </div>
+                        <div class="jumbotron" style="opacity: 0.9;" sec:authorize="${isAuthenticated()}">
+                            <h1 class="display-3">Merhaba!</h1>
+                            <p class="lead">Teknik Servis Uygulamasına Hoşgeldiniz. Yönetici sayfasına giriş yaparak
+                                işlem yapabilirsiniz.</p>
+                            <hr class="my-2">
+                            <p class="lead">
+                                <a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/adminPage}"
+                                   href="/adminPage">Admin</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container-fluid p-5" style="background:#F2F0E6;">
+    <h1 class="display-4 mb-4">Konular</h1>
+    <div class="card-deck mx-5">
+        <div class="card">
+            <img class="card-img-top" src="/images/pathToYourImage.png" alt="Card image cap">
+            <div class="card-body">Bir şeyler daha</div>
+        </div>
+        <div class="card">
+            <img class="card-img-top" src="/images/pathToYourImage.png" alt="Card image cap">
+            <div class="card-body">Bir şeyler daha</div>
+        </div>
+        <div class="card">
+            <img class="card-img-top" src="/images/pathToYourImage.png" alt="Card image cap">
+            <div class="card-body">Bir şeyler daha</div>
+        </div>
+        <div class="card">
+            <img class="card-img-top" src="/images/pathToYourImage.png" alt="Card image cap">
+            <div class="card-body">Bir şeyler daha</div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid p-5" style="background:#EFDECD;">
+    <h1 class="display-4 mb-4">Konular daha</h1>
+    <div class="card-deck mx-3">
+        <div class="card">
+            <img class="card-img-top" src="/images/pathToYourImage.png" alt="Card image cap">
+            <div class="card-body">Bir şeyler daha</div>
+        </div>
+        <div class="card">
+            <img class="card-img-top" src="/images/pathToYourImage.png" alt="Card image cap">
+            <div class="card-body">Bir şeyler daha</div>
+        </div>
+        <div class="card">
+            <img class="card-img-top" src="/images/pathToYourImage.png" alt="Card image cap">
+            <div class="card-body">Bir şeyler daha</div>
+        </div>
+        <div class="card">
+            <img class="card-img-top" src="/images/pathToYourImage.png" alt="Card image cap">
+            <div class="card-body">Bir şeyler daha</div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Footer -->
+<footer th:replace="fragments/footer :: footer"></footer>
+
+
+<div th:replace="fragments/jsScripts :: scripts"></div>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+</head>
+<body>
+
+<nav th:replace="fragments/header :: nav"></nav>
+
+<div id="admin-section">
+    <div class="admin-inner">
+        <div class="container">
+            <div class="d-flex flex-row">
+                <div th:replace="fragments/adminSidebar :: admin-sidebar"></div>
+
+                <div id="admin-content">
+                    <form class="admin-form" th:action="@{/adminPage/clients/{id}(id=${clientUpdateDto.id})}"
+                          th:object="${clientUpdateDto}" th:method="post" method="post">
+                        <ul class="global-errors" th:if="${#fields.hasErrors('global')}">
+                            <li class="text-danger" th:each="err : ${#fields.errors('global')}" th:text="${err}">
+                                Girilen değer geçersiz
+                            </li>
+                        </ul>
+                        <div class="form-group">
+                            <label for="editedClientName">İsim</label>
+                            <input id="editedClientName" type="text" class="form-control" th:field="*{name}">
+                            <p class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="editedClientSurname">Soyad</label>
+                            <input id="editedClientSurname" type="text" class="form-control" th:field="*{surname}">
+                            <p class="text-danger" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></p>
+                        </div><div class="form-group">
+                        <label for="newClientPhone">Telefon</label>
+                        <input type="text" class="form-control" th:field="*{phone}" id="newClientPhone"
+                               placeholder="Telefon">
+                        <p class="text-danger" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
+                    </div>
+                        <div class="form-group">
+                            <label for="newClientGsm">GSM</label>
+                            <input type="text" class="form-control" th:field="*{gsm}" id="newClientGsm"
+                                   placeholder="GSM">
+                            <p class="text-danger" th:if="${#fields.hasErrors('gsm')}" th:errors="*{gsm}"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="newClientEmail">Email</label>
+                            <input th:type="email" type="email" class="form-control" th:field="*{email}"
+                                   id="newClientEmail" aria-describedby="emailHelp" placeholder="Email adresi">
+                            <small id="emailHelp" class="form-text text-muted">Bilgileriniz kimseyle paylaşılmayacaktır.
+                            </small>
+                            <!--<span class="text-danger"  th:text="${alreadyRegisteredMessage}"></span>-->
+                            <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                        </div>
+                        <div class="form-group">
+                            <label th:for="address" for="newClientAddress">Adres</label>
+                            <textarea class="form-control" th:field="*{address}"
+                                   id="newClientAddress" placeholder="Adres"/>
+                            <p class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+                        </div>
+                        <div class="form-group">
+                            <label th:for="notes" for="newClientNotes">Notlar</label>
+                            <textarea class="form-control" th:field="*{notes}"
+                                   id="newClientNotes" placeholder="Notlar"/>
+                            <p class="text-danger" th:if="${#fields.hasErrors('notes')}" th:errors="*{notes}"></p>
+                        </div>
+                        <div class="form-group">
+                            <label th:for="clientDetail" for="newClientDetail">Müşteri Tipi</label>
+                            <select class="form-control" id="newClientDetail" th:field="*{clientDetail}">
+                                <option th:each="dropDownClientDetail:${clientDetailList}"
+                                        th:value="${dropDownClientDetail.id}"
+                                        th:text="${dropDownClientDetail.detailName}"></option>
+                            </select>
+                        </div>
+                        <a class="btn btn-dark" th:href="@{/adminPage/clients}">İptal</a>
+                        <button type="submit" class="btn btn-primary">Gönder</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+<div th:replace="fragments/jsScripts :: scripts"></div>
+
+</body>
+</html>
